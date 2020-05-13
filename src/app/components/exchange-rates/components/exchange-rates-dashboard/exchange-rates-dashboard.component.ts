@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ExchangeRatesService} from '../../services/exchange-rates.service';
+import {select, Store} from '@ngrx/store';
+import {RateDto} from '../../models/rate.dto';
+import {loadLatestRates} from '../../store/actions/exchange-rates.actions';
+import {Observable} from 'rxjs';
+import {selectRates} from '../../store/selectors/exchange-rates.selectors';
 
 @Component({
   selector: 'app-exchange-rates-dashboard',
@@ -7,13 +12,14 @@ import {ExchangeRatesService} from '../../services/exchange-rates.service';
   styleUrls: ['./exchange-rates-dashboard.component.scss']
 })
 export class ExchangeRatesDashboardComponent implements OnInit {
+  rate$: Observable<RateDto>;
+  private rateCurrencyBadge = 'PLN';
 
-  constructor(private services: ExchangeRatesService) { }
-
-  ngOnInit(): void {
-    this.services.getRates('PLN').subscribe(data => {
-      console.log(data);
-    });
+  constructor(private store: Store<{ rates: RateDto }>) {
   }
 
+  ngOnInit(): void {
+    this.store.dispatch(loadLatestRates({rateCurrency: this.rateCurrencyBadge}));
+    this.rate$ = this.store.pipe(select(selectRates));
+  }
 }
