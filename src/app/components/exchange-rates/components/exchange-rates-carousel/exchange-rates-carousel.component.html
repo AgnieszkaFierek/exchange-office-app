@@ -1,0 +1,19 @@
+<section>
+  <main>
+    <div [@animationSlider]="index" class="exchange-rates-carousel">
+      <ng-container *ngFor="let rate of rates; let i = index">
+        <ng-container *ngIf="i === index">
+          <app-rate-box [baseCurrencyBadge]="rate.baseCurrency"
+                        [rateCurrency]="(rate$ | async)?.rates[rate.rateCurrency]"
+                        [rateCurrencyBadge]="rate.rateCurrency">
+          </app-rate-box>
+        </ng-container>
+      </ng-container>
+    </div>
+  </main>
+
+  <footer>
+    <button mat-raised-button (click)="onPreview(index)">Prev</button>
+    <button mat-raised-button (click)="onNext(index)">Next</button>
+  </footer>
+</section>

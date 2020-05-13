@@ -8,10 +8,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {ExchangeRatesEffects} from './store/effects/exchange-rates.effects';
 import {CommonModule} from '@angular/common';
 import {RateBoxModule} from '../../shared/rate-box/rate-box.module';
+import { ExchangeRatesCarouselComponent } from './components/exchange-rates-carousel/exchange-rates-carousel.component';
 
 
 @NgModule({
-  declarations: [ExchangeRatesDashboardComponent],
+  declarations: [ExchangeRatesDashboardComponent, ExchangeRatesCarouselComponent],
   imports: [
     CommonModule,
     ExchangeRatesRoutingModule,

@@ -1,8 +1,8 @@
 @import "../../../../assets/scss/variables";
 
 .rate-box {
-  max-width: 16vw;
-  min-height: 8vh;
+  width: 200px;
+  height: 100px;
   padding: $lg-space;
   display: flex;
   flex-direction: column;
