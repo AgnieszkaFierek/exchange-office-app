@@ -2,31 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {RateDto} from '../../models/rate.dto';
 import {ExchangeRatesService} from '../../services/exchange-rates.service';
-import {trigger, transition, query, style, animate, group} from '@angular/animations';
-
-const left = [
-  query(':enter, :leave', style({position: 'fixed', width: '200px'}), {optional: true}),
-  group([
-    query(':enter', [style({transform: 'translateX(-200px)'}), animate('.8s ease-out', style({transform: 'translateX(0%)'}))], {
-      optional: true,
-    }),
-    query(':leave', [style({transform: 'translateX(0%)'}), animate('.8s ease-out', style({transform: 'translateX(200px)'}))], {
-      optional: true,
-    }),
-  ]),
-];
-
-const right = [
-  query(':enter, :leave', style({position: 'fixed', width: '200px'}), {optional: true}),
-  group([
-    query(':enter', [style({transform: 'translateX(200px)'}), animate('.8s ease-out', style({transform: 'translateX(0%)'}))], {
-      optional: true,
-    }),
-    query(':leave', [style({transform: 'translateX(0%)'}), animate('.8s ease-out', style({transform: 'translateX(-200px)'}))], {
-      optional: true,
-    }),
-  ]),
-];
+import {trigger, transition} from '@angular/animations';
+import {animationLeft, animationRight} from '../../models/animation';
 
 @Component({
   selector: 'app-exchange-rates-carousel',
@@ -34,8 +11,8 @@ const right = [
   styleUrls: ['./exchange-rates-carousel.component.scss'],
   animations: [
     trigger('animationSlider', [
-      transition(':increment', right),
-      transition(':decrement', left),
+      transition(':increment', animationRight),
+      transition(':decrement', animationLeft),
     ]),
   ],
 })
@@ -54,7 +31,7 @@ export class ExchangeRatesCarouselComponent implements OnInit {
       baseCurrency: 'CAD'
     }
   ];
-
+  intervalTime = 5000;
   index = 0;
   rate$: BehaviorSubject<RateDto> = new BehaviorSubject<RateDto>(null);
 
@@ -63,6 +40,10 @@ export class ExchangeRatesCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRates(0);
+
+    setInterval(() => {
+      this.onNext(this.index);
+    }, this.intervalTime);
   }
 
   public onNext(index: number) {
