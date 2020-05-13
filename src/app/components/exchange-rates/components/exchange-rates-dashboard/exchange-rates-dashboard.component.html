@@ -1,1 +1,9 @@
-{{ (rate$ | async) | json }}
+<section>
+  <ng-container *ngIf="(rate$ | async) as rate">
+    <app-rate-box [baseCurrencyBadge]="rate.base"
+                  [rateCurrency]="rate.rates[rateCurrencyBadge]"
+                  [rateCurrencyBadge]="rateCurrencyBadge">
+    </app-rate-box>
+  </ng-container>
+</section>
+

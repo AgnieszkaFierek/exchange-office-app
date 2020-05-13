@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/variables";
+
+.rate-box {
+  max-width: 16vw;
+  min-height: 8vh;
+  padding: $lg-space;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .rate {
+    &__base-currency {
+      font-size: 36px;
+      color: $primary;
+    }
+
+    &__currency {
+      font-size: 36px;
+      color: $text;
+      display: flex;
+      justify-content: flex-end;
+
+
+      &--badge {
+        font-size: 24px;
+        color: $primary;
+        margin-left: $sm-space;
+      }
+    }
+  }
+}

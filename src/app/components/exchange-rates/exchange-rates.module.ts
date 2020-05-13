@@ -7,6 +7,7 @@ import {exchangeRatesFeatureKey, reducer} from './store/reducers/exchange-rates.
 import {EffectsModule} from '@ngrx/effects';
 import {ExchangeRatesEffects} from './store/effects/exchange-rates.effects';
 import {CommonModule} from '@angular/common';
+import {RateBoxModule} from '../../shared/rate-box/rate-box.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {CommonModule} from '@angular/common';
     CommonModule,
     ExchangeRatesRoutingModule,
     MaterialModule,
+    RateBoxModule,
     StoreModule.forFeature(exchangeRatesFeatureKey, reducer),
     EffectsModule.forFeature([ExchangeRatesEffects]),
   ]

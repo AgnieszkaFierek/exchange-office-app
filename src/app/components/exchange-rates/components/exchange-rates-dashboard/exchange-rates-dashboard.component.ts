@@ -13,7 +13,7 @@ import {selectRates} from '../../store/selectors/exchange-rates.selectors';
 })
 export class ExchangeRatesDashboardComponent implements OnInit {
   rate$: Observable<RateDto>;
-  private rateCurrencyBadge = 'PLN';
+  public rateCurrencyBadge = 'PLN';
 
   constructor(private store: Store<{ rates: RateDto }>) {
   }
