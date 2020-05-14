@@ -1,15 +1,23 @@
-<div *ngIf="exchangeChart && exchangeChart.length > 0">
-  <ngx-charts-line-chart
-    [view]="view"
-    [scheme]="colorScheme"
-    [legend]="legend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [timeline]="timeline"
-    [results]="exchangeChart">
-  </ngx-charts-line-chart>
-</div>
+<mat-card class="exchange-charts">
+  <mat-card-title>{{baseCurrency}}</mat-card-title>
+  <mat-card-content class="exchange-charts__content">
+    <ng-container *ngIf="exchangeChart && exchangeChart.length > 0">
+      <ngx-charts-line-chart
+        [view]="view"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [results]="exchangeChart">
+      </ngx-charts-line-chart>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+
+<section class="mt-48">
+  <a mat-raised-button routerLink="/">Dashboard</a>
+</section>
+

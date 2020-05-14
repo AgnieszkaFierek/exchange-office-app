@@ -3,6 +3,7 @@ import {CommonModule, DecimalPipe} from '@angular/common';
 import { ExchangeChartsComponent } from './components/exchange-charts/exchange-charts.component';
 import {ExchangeChartsRoutingModule} from './exchange-charts-routing.module';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {MaterialModule} from '../../shared/material.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
   imports: [
     CommonModule,
     ExchangeChartsRoutingModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MaterialModule
   ],
   providers: [DecimalPipe]
 })
