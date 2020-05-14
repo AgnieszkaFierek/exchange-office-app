@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RateDto} from '../models/rate.dto';
+import {RateHistoryDto} from '../models/rate-history.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,10 @@ export class ExchangeRatesService {
       url += `&symbols=${rateCurrency}`;
     }
     return this.httpClient.get<RateDto>(url);
+  }
+
+  getRatesHistory(rateCurrency: string, baseCurrency: string, startAt: string, endAt: string): Observable<RateHistoryDto> {
+    const url = `${this.EXCHANGE_RATES_API_URL}/history?start_at=${startAt}&end_at=${endAt}&symbols=${rateCurrency}&base=${baseCurrency}`;
+    return this.httpClient.get<RateHistoryDto>(url);
   }
 }

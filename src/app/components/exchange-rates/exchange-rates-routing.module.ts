@@ -6,6 +6,9 @@ import {ExchangeRatesDashboardComponent} from './components/exchange-rates-dashb
 const routes: Routes = [
   {
     path: '', component: ExchangeRatesDashboardComponent
+  },
+  {
+    path: 'charts', loadChildren: () => import('../exchange-charts/exchange-charts.module').then(c => c.ExchangeChartsModule)
   }
 ];
 
