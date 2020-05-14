@@ -2,19 +2,18 @@
   <main>
     <div [@animationSlider]="animationIndex" class="exchange-rates-carousel">
       <ng-container *ngFor="let rateGroup of ratesGroup; let i = index">
-        <ng-container *ngIf="i === rateIndex">
-          <app-rate-box [baseCurrencyBadge]="rateGroup.baseCurrency"
-                        [rateCurrency]="(rate$ | async)?.rates[rateGroup.rateCurrency]"
-                        [rateCurrencyBadge]="rateGroup.rateCurrency"
-                        [imageIndex]="i">
-          </app-rate-box>
-        </ng-container>
+        <app-rate-box *ngIf="i === rateIndex"
+                      [baseCurrencyBadge]="rateGroup.baseCurrency"
+                      [rateCurrency]="(rate$ | async)?.rates[rateGroup.rateCurrency]"
+                      [rateCurrencyBadge]="rateGroup.rateCurrency"
+                      [imageIndex]="i">
+        </app-rate-box>
       </ng-container>
     </div>
   </main>
 
-  <footer>
-    <button mat-raised-button (click)="onPreview(rateIndex)">Prev</button>
-    <button mat-raised-button (click)="onNext(rateIndex)">Next</button>
+  <footer class="mt-12">
+    <button mat-icon-button (click)="onPreview(rateIndex)"><mat-icon>navigate_before</mat-icon></button>
+    <button mat-icon-button (click)="onNext(rateIndex)"><mat-icon>navigate_next</mat-icon></button>
   </footer>
 </section>

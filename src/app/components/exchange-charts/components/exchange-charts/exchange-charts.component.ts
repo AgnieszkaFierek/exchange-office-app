@@ -48,7 +48,7 @@ export class ExchangeChartsComponent implements OnInit {
         sum += sum + ratesHistory.rates[yearKey][rateCurrency];
       }
 
-      const average = (sum / yearKeys.length - 1).toString().match(/\d+\.\d{4}/)[0];
+      const average = (sum / yearKeys.length - 1).toString().match(/\d+\.\d{3}/)[0];
       ratesHistoryGroup.push({name: year.toString(), value: sum ? average : 0 });
     }
 

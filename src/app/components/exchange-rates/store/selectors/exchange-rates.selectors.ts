@@ -1,16 +1,15 @@
 import {createFeatureSelector, createSelector, select} from '@ngrx/store';
-import * as fromExchangeRates from '../reducers/exchange-rates.reducer';
+import {State, exchangeRatesFeatureKey} from '../reducers/exchange-rates.reducer';
 import {pipe} from 'rxjs';
-import {filter, first} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
-export const selectExchangeRatesState = createFeatureSelector<fromExchangeRates.State> (
-  fromExchangeRates.exchangeRatesFeatureKey
+export const selectExchangeRatesState = createFeatureSelector<State> (
+  exchangeRatesFeatureKey
 );
 
-export const selectRates = createSelector(selectExchangeRatesState, (state: fromExchangeRates.State) => state.rates);
+export const selectRates = createSelector(selectExchangeRatesState, (state: State) => state.rates);
 
-export const selectFirstRate = pipe(
+export const selectExchangeRates = pipe(
   select(selectRates),
-  filter(rate => rate !== null),
-  first()
+  filter(rates => rates !== null),
 );

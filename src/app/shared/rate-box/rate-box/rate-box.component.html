@@ -1,4 +1,4 @@
-<mat-card class="rate-box" [ngStyle]="{'background-image': 'url(' + photoUrl + ')'}">
+<mat-card class="rate-box" [ngStyle]="{'background-image': 'url(' + photoUrl + ')'}" [ngClass]="{'rate-box--photo-box': photoUrl}">
     <p class="rate__base-currency">{{ baseCurrencyBadge }}</p>
     <div class="rate__currency">
       <p>{{ rateCurrency | number }} <span class="rate__currency--badge">{{ rateCurrencyBadge }}</span></p>

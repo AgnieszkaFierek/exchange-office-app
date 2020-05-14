@@ -3,17 +3,32 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RateDto} from '../models/rate.dto';
 import {RateHistoryDto} from '../models/rate-history.dto';
+import {IExchangeRateGroup} from '../../../shared/models/exchange-rate-group.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeRatesService {
+  public exchangeRateGroups: IExchangeRateGroup[] = [
+    {
+      rateCurrency: 'PLN',
+      baseCurrency: 'EUR'
+    },
+    {
+      rateCurrency: 'GBP',
+      baseCurrency: 'USD'
+    },
+    {
+      rateCurrency: 'CHF',
+      baseCurrency: 'CAD'
+    }
+  ];
   private readonly EXCHANGE_RATES_API_URL = 'https://api.exchangeratesapi.io';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getRates(rateCurrency?: string, baseCurrency = 'EUR'): Observable<RateDto> {
+  getRates(rateCurrency: string, baseCurrency = 'EUR'): Observable<RateDto> {
     let url = `${this.EXCHANGE_RATES_API_URL}/latest?base=${baseCurrency}`;
     if (rateCurrency) {
       url += `&symbols=${rateCurrency}`;

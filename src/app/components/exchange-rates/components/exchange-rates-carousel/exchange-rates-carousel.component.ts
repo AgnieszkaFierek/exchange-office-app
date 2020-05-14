@@ -4,9 +4,10 @@ import {RateDto} from '../../models/rate.dto';
 import {ExchangeRatesService} from '../../services/exchange-rates.service';
 import {trigger, transition} from '@angular/animations';
 import {animationLeft, animationRight} from '../../models/animation';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {loadLatestRates} from '../../store/actions/exchange-rates.actions';
-import {selectRates} from '../../store/selectors/exchange-rates.selectors';
+import {selectExchangeRates} from '../../store/selectors/exchange-rates.selectors';
+import {IExchangeRateGroup} from '../../../../shared/models/exchange-rate-group.interfaces';
 
 @Component({
   selector: 'app-exchange-rates-carousel',
@@ -20,30 +21,21 @@ import {selectRates} from '../../store/selectors/exchange-rates.selectors';
   ],
 })
 export class ExchangeRatesCarouselComponent implements OnInit {
-  ratesGroup: { rateCurrency: string, baseCurrency: string }[] = [
-    {
-      rateCurrency: 'PLN',
-      baseCurrency: 'EUR'
-    },
-    {
-      rateCurrency: 'GBP',
-      baseCurrency: 'USD'
-    },
-    {
-      rateCurrency: 'CHF',
-      baseCurrency: 'CAD'
-    }
-  ];
   intervalTime = 6000;
   rateIndex = 0;
   animationIndex = 0;
+  ratesGroup: IExchangeRateGroup[];
   rate$: Observable<RateDto>;
 
   constructor(private exchangeRatesService: ExchangeRatesService, private store: Store<{ rates: RateDto }>) {
   }
 
   ngOnInit(): void {
-    this.rate$ = this.store.pipe(select(selectRates));
+    this.ratesGroup = this.exchangeRatesService.exchangeRateGroups;
+
+    this.store.dispatch(loadLatestRates(this.ratesGroup[0]));
+    this.rate$ = this.store.pipe(selectExchangeRates);
+
     setInterval(() => {
       this.onNext(this.rateIndex);
     }, this.intervalTime);

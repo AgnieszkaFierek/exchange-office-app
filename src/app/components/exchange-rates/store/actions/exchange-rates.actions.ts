@@ -1,9 +1,10 @@
 import {createAction, props} from '@ngrx/store';
 import {RateDto} from '../../models/rate.dto';
+import {IExchangeRateGroup} from '../../../../shared/models/exchange-rate-group.interfaces';
 
 export const loadLatestRates = createAction(
   '[Exchange Rates] Load Rates',
-  props<{rateCurrency?: string, baseCurrency?: string}>()
+  props<IExchangeRateGroup>()
 );
 
 export const loadLatestRatesSuccess = createAction(

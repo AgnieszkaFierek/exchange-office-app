@@ -28,4 +28,20 @@
       }
     }
   }
+
+  &--photo-box {
+    .rate {
+      &__base-currency {
+        color: white !important;
+      }
+
+      &__currency {
+        color: white !important;
+
+        &--badge {
+          color: white !important;
+        }
+      }
+    }
+  }
 }
