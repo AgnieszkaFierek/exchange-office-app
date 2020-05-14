@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {RateDto} from '../../models/rate.dto';
 import {loadLatestRates} from '../../store/actions/exchange-rates.actions';
 import {Observable} from 'rxjs';
-import {selectRates} from '../../store/selectors/exchange-rates.selectors';
+import {selectFirstRate} from '../../store/selectors/exchange-rates.selectors';
 
 @Component({
   selector: 'app-exchange-rates-dashboard',
@@ -20,6 +20,6 @@ export class ExchangeRatesDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadLatestRates({rateCurrency: this.rateCurrencyBadge}));
-    this.rate$ = this.store.pipe(select(selectRates));
+    this.rate$ = this.store.pipe(selectFirstRate);
   }
 }

@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {RateDto} from '../../models/rate.dto';
 import {ExchangeRatesService} from '../../services/exchange-rates.service';
 import {trigger, transition} from '@angular/animations';
 import {animationLeft, animationRight} from '../../models/animation';
+import {select, Store} from '@ngrx/store';
+import {loadLatestRates} from '../../store/actions/exchange-rates.actions';
+import {selectRates} from '../../store/selectors/exchange-rates.selectors';
 
 @Component({
   selector: 'app-exchange-rates-carousel',
@@ -17,7 +20,7 @@ import {animationLeft, animationRight} from '../../models/animation';
   ],
 })
 export class ExchangeRatesCarouselComponent implements OnInit {
-  rates: { rateCurrency: string, baseCurrency: string }[] = [
+  ratesGroup: { rateCurrency: string, baseCurrency: string }[] = [
     {
       rateCurrency: 'PLN',
       baseCurrency: 'EUR'
@@ -31,40 +34,46 @@ export class ExchangeRatesCarouselComponent implements OnInit {
       baseCurrency: 'CAD'
     }
   ];
-  intervalTime = 5000;
-  index = 0;
-  rate$: BehaviorSubject<RateDto> = new BehaviorSubject<RateDto>(null);
+  intervalTime = 6000;
+  rateIndex = 0;
+  animationIndex = 0;
+  rate$: Observable<RateDto>;
 
-  constructor(private exchangeRatesService: ExchangeRatesService) {
+  constructor(private exchangeRatesService: ExchangeRatesService, private store: Store<{ rates: RateDto }>) {
   }
 
   ngOnInit(): void {
-    this.getRates(0);
-
+    this.rate$ = this.store.pipe(select(selectRates));
     setInterval(() => {
-      this.onNext(this.index);
+      this.onNext(this.rateIndex);
     }, this.intervalTime);
   }
 
   public onNext(index: number) {
-    const newIndex = index < this.rates.length - 1 ? ++index : 0;
-    this.getRates(newIndex, true);
-
+    if (index < this.ratesGroup.length - 1) {
+      ++this.rateIndex;
+      ++this.animationIndex;
+    } else {
+      this.rateIndex = this.ratesGroup.length - 1 - index;
+      ++this.animationIndex;
+    }
+    this.getLatestRates(this.rateIndex);
   }
 
   public onPreview(index: number) {
-    const newIndex = index === 0 ? this.rates.length - 1 : --index;
-    this.getRates(newIndex, true);
-
+    if (index !== 0) {
+      --this.rateIndex;
+      --this.animationIndex;
+    } else {
+      this.rateIndex = this.ratesGroup.length - 1 + index;
+      --this.animationIndex;
+    }
+    this.getLatestRates(this.rateIndex);
   }
 
-  private getRates(index: number, changeIndex?: boolean) {
-    this.exchangeRatesService.getRates(this.rates[index].rateCurrency, this.rates[index].baseCurrency).subscribe(rate => {
-      this.rate$.next(rate);
-      if (changeIndex) {
-        this.index = index;
-      }
-    });
+  private getLatestRates(index: number) {
+    this.store.dispatch(
+      loadLatestRates({rateCurrency: this.ratesGroup[index].rateCurrency, baseCurrency: this.ratesGroup[index].baseCurrency})
+    );
   }
-
 }
