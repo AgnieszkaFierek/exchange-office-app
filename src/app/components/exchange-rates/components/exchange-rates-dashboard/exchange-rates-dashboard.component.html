@@ -5,6 +5,32 @@
                   [rateCurrencyBadge]="rateCurrencyBadge">
     </app-rate-box>
   </ng-container>
+
+  <form [formGroup]="form" (ngSubmit)="onChange()">
+    <mat-form-field>
+      <mat-label>Base</mat-label>
+      <mat-select formControlName="base" required>
+        <mat-option *ngFor="let rate of rates" [value]="rate">
+          {{rate}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="form.get('base').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rate</mat-label>
+      <mat-select formControlName="rate" required>
+        <mat-option *ngFor="let rate of rates" [value]="rate">
+          {{rate}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="form.get('base').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button [disabled]="form.invalid">Change</button>
+  </form>
 </section>
 
 <section class="mt-48">

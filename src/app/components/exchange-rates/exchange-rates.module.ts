@@ -9,6 +9,7 @@ import {ExchangeRatesEffects} from './store/effects/exchange-rates.effects';
 import {CommonModule} from '@angular/common';
 import {RateBoxModule} from '../../shared/rate-box/rate-box.module';
 import { ExchangeRatesCarouselComponent } from './components/exchange-rates-carousel/exchange-rates-carousel.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ExchangeRatesCarouselComponent } from './components/exchange-rates-caro
     RateBoxModule,
     StoreModule.forFeature(exchangeRatesFeatureKey, reducer),
     EffectsModule.forFeature([ExchangeRatesEffects]),
+    ReactiveFormsModule
   ]
 })
 export class ExchangeRatesModule {

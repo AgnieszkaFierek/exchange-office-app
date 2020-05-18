@@ -40,14 +40,14 @@ describe('ExchangeRatesCarouselComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should rates', () => {
-  //   component.rate$.subscribe(rate => {
-  //     expect(rate.base).toEqual(ratesMock.base);
-  //   });
-  // });
+  it('should rates', () => {
+    component.rate$.subscribe(rate => {
+      expect(rate.base).toEqual(ratesMock.base);
+    });
+  });
 
   it('should rates groups', () => {
-    expect(component.ratesGroup[0].baseCurrency).toEqual('EUR');
+    expect(component.ratesGroup[0].rateCurrency).toEqual('PLN');
   });
 
   it('rate next index carousel', () => {
@@ -56,9 +56,9 @@ describe('ExchangeRatesCarouselComponent', () => {
     expect(component.rateIndex).toEqual(1);
   });
 
-  // it('rate prev index carousel', () => {
-  //   const basicIndex = 1;
-  //   component.onPreview(basicIndex);
-  //   expect(component.rateIndex).toEqual(0);
-  // });
+  it('rate prev index carousel', () => {
+    const basicIndex = 0;
+    component.onPreview(basicIndex);
+    expect(component.rateIndex).not.toEqual(0);
+  });
 });
